@@ -1,0 +1,25 @@
+{
+  "name": "MISSION: SPEAK!",
+  "short_name": "MISSION SPEAK!",
+  "description": "Speak. Record. Listen. Improve.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5F7F8",
+  "theme_color": "#1F3B57",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
