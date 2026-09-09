@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="theme-color" content="#1F3B57">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MISSION: SPEAK!">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MISSION: SPEAK! | Speak. Practice. Grow.</title>
@@ -604,5 +611,17 @@ function resetData(){
 document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeOverlay();});
 updateHome();
 </script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(function (error) {
+        console.log("Service Worker registration failed:", error);
+      });
+  });
+}
+</script>
+
 </body>
 </html>
