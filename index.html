@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MISSION: SPEAK! | Speak. Practice. Grow.</title>
+<style>
+:root{
+  --navy:#17324D;
+  --navy2:#244D6B;
+  --green:#2F9E75;
+  --orange:#E98B39;
+  --cream:#F6F7F8;
+  --white:#FFFFFF;
+  --ink:#1E2F3E;
+  --muted:#74818B;
+  --line:#E3E8EB;
+  --soft-green:#EAF6F0;
+  --shadow:0 12px 35px rgba(23,50,77,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+.app{max-width:1180px;margin:auto;padding:24px 20px 100px}
+
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.brand{font-size:21px;font-weight:900;letter-spacing:-.8px;color:var(--navy)}
+.brand span{color:var(--orange)}
+.headerRight{display:flex;gap:10px;align-items:center}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-size:13px;color:var(--muted);font-weight:700}
+.iconBtn{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--navy)}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:32px;padding:58px 60px;color:#fff;min-height:330px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 24px 70px rgba(23,50,77,.16)}
+.eyebrow{font-size:11px;font-weight:900;letter-spacing:1.8px;opacity:.65;margin-bottom:14px}
+.hero h1{font-size:68px;letter-spacing:-2.8px;line-height:.98;margin:0 0 16px}
+.hero p{max-width:540px;line-height:1.65;font-size:16px;color:rgba(255,255,255,.78);margin:0}
+.heroActions{display:flex;gap:12px;margin-top:26px}
+.primary{border:0;background:var(--orange);color:#fff;font-weight:850;padding:15px 21px;border-radius:15px;box-shadow:0 10px 25px rgba(233,139,57,.25)}
+.secondary{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-weight:800;padding:15px 21px;border-radius:15px}
+
+/* Continue */
+.continue{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px 26px;margin:22px 0 40px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}
+.kicker{font-size:10px;font-weight:900;letter-spacing:1.4px;color:var(--green);margin-bottom:7px}
+.continueTitle{font-size:23px;font-weight:900;letter-spacing:-.7px;color:var(--navy)}
+.continueText{font-size:13px;color:var(--muted);margin-top:5px}
+.progressMini{width:210px;height:7px;background:#E9EEF0;border-radius:999px;overflow:hidden;margin-top:10px}
+.progressMini span{display:block;height:100%;background:var(--green);border-radius:999px}
+
+/* Section */
+.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}
+.sectionHead h2{font-size:28px;letter-spacing:-1px;margin:0;color:var(--navy)}
+.sectionHead p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.level{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;min-height:225px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;transition:.2s;box-shadow:0 4px 18px rgba(23,50,77,.025)}
+.level:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.levelIcon{font-size:30px;margin-bottom:18px}
+.levelNo{font-size:10px;font-weight:900;letter-spacing:1.2px;color:var(--green);margin-bottom:7px}
+.level h3{font-size:22px;margin:0 0 8px;letter-spacing:-.6px;color:var(--navy)}
+.level p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+.levelRange{margin-top:auto;padding-top:18px;font-size:11px;font-weight:900;letter-spacing:.7px;color:var(--navy)}
+
+/* Other */
+.footerNote{text-align:center;color:var(--muted);font-size:12px;margin-top:38px}
+
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(15,30,42,.48);display:none;align-items:flex-end;justify-content:center;z-index:20;backdrop-filter:blur(6px)}
+.overlay.show{display:flex}
+.modal{width:min(720px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:30px 30px 0 0;padding:28px 28px 40px;box-shadow:0 -20px 60px rgba(0,0,0,.16)}
+.modalTop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+.modalKicker{font-size:10px;font-weight:900;letter-spacing:1.3px;color:var(--green);margin-bottom:7px}
+.modalTitle{font-size:28px;letter-spacing:-1px;color:var(--navy);margin:0}
+.close{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:#fff;font-size:20px}
+
+/* Mission grid */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:0 0 18px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.missionNo{aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:18px;font-weight:900;font-size:17px;color:var(--navy);transition:.16s}
+.missionNo:hover{transform:translateY(-2px);border-color:var(--green);box-shadow:0 8px 20px rgba(23,50,77,.09)}
+.missionNo.done{background:var(--soft-green);border-color:#C9E5D7;color:#237A58}
+.missionNo.current{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* Mission detail */
+.backLink{border:0;background:transparent;padding:0;color:var(--green);font-weight:850;margin-bottom:20px}
+.missionMeta{font-size:11px;font-weight:900;letter-spacing:1.4px;color:var(--green)}
+.missionTitle{font-size:38px;letter-spacing:-1.3px;line-height:1.1;color:var(--navy);margin:12px 0}
+.instruction{font-size:16px;line-height:1.65;color:var(--muted)}
+.helper{background:#F6F9FA;border:1px solid var(--line);border-radius:20px;padding:18px;margin:22px 0}
+.helper b{font-size:11px;letter-spacing:1px;color:var(--navy)}
+.helper p{margin:10px 0 0;line-height:1.7;color:var(--muted)}
+.timerRow{display:flex;gap:9px;margin:18px 0}
+.timeChoice{flex:1;padding:12px;border-radius:13px;border:1px solid var(--line);background:#fff;font-weight:800;color:var(--muted)}
+.timeChoice.active{border-color:var(--navy);background:var(--navy);color:#fff}
+.timer{font-size:54px;text-align:center;font-weight:900;letter-spacing:-2px;color:var(--navy);margin:20px 0}
+.full{width:100%;font-size:16px}
+.complete{background:var(--green);margin-top:10px}
+
+/* Bottom nav mobile */
+.bottomNav{display:none}
+
+@media(max-width:800px){
+  .app{padding:16px 14px 100px}
+  .header{margin-bottom:16px}
+  .pill{display:none}
+  .hero{border-radius:28px;padding:42px 26px;min-height:410px;justify-content:flex-end}
+  .hero h1{font-size:52px;letter-spacing:-2.2px}
+  .hero p{font-size:15px}
+  .heroActions{flex-direction:column}
+  .heroActions button{width:100%}
+  .continue{padding:20px;display:block}
+  .continue button{width:100%;margin-top:18px}
+  .sectionHead{display:block}
+  .sectionHead h2{font-size:25px}
+  .levels{grid-template-columns:1fr 1fr;gap:12px}
+  .level{min-height:185px;padding:18px;border-radius:20px}
+  .levelIcon{font-size:26px;margin-bottom:12px}
+  .level h3{font-size:19px}
+  .levelRange{padding-top:14px}
+  .modal{padding:24px 16px 36px}
+  .modalTitle{font-size:25px}
+  .grid{gap:9px}
+  .missionNo{border-radius:15px;font-size:15px}
+  .missionTitle{font-size:32px}
+  .bottomNav{display:flex;position:fixed;left:14px;right:14px;bottom:14px;background:var(--navy);border-radius:24px;height:68px;align-items:center;justify-content:space-around;padding:0 8px;box-shadow:0 18px 40px rgba(23,50,77,.25)}
+  .bottomNav button{border:0;background:transparent;color:rgba(255,255,255,.65);font-size:10px;font-weight:750;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .bottomNav .play{width:52px;height:52px;border-radius:18px;background:var(--orange);color:#fff;font-size:17px;justify-content:center}
+}
+
+.missionBox{background:#FFF8F1;border-color:#F2DEC7}
+.helperList{margin:12px 0 0;padding-left:20px;color:var(--muted);line-height:1.9}
+.helperList li{padding-left:3px}
+.officialTime{margin:18px 0 6px;font-size:13px;color:var(--navy);background:#F6F9FA;border:1px solid var(--line);border-radius:14px;padding:13px 15px}
+.officialTime span{color:var(--muted);font-weight:600}
+
+
+/* V9 Voice Recording */
+.speakingStudio{margin-top:18px;border:1px solid var(--line);border-radius:20px;padding:18px;background:#fff}
+.studioHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.studioHeader b{font-size:14px;color:var(--navy)}
+.recStatus{font-size:11px;font-weight:800;padding:7px 10px;border-radius:999px;background:#F3F4F5;color:var(--muted)}
+.recStatus.live{background:#FFF0F0;color:#C83A3A;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.5}}
+.wave{height:42px;display:flex;align-items:center;justify-content:center;gap:4px;margin:8px 0 14px}
+.wave span{width:4px;height:12px;background:#C7CED2;border-radius:8px}
+.wave.live span{background:#E25B5B;animation:wave .75s infinite alternate}
+.wave.live span:nth-child(2n){animation-delay:.12s}
+.wave.live span:nth-child(3n){animation-delay:.24s}
+@keyframes wave{to{height:38px}}
+.recControls{display:grid;grid-template-columns:1fr;gap:10px}
+.recordBtn,.stopBtn,.retryBtn{border:0;border-radius:14px;padding:14px;font-weight:800;cursor:pointer}
+.recordBtn{background:var(--navy);color:#fff}.stopBtn,.retryBtn{background:#F1F3F4;color:var(--navy)}
+.recordBtn:disabled,.stopBtn:disabled{opacity:.45;cursor:not-allowed}
+.permissionNote{font-size:11px;color:var(--muted);line-height:1.45;margin:10px 0 0}
+.audioPlayer{width:100%;margin-top:14px}
+.transcriptBox,.checkBox{margin-top:15px;border:1px solid var(--line);border-radius:16px;padding:15px;background:#FAFBFB}
+.transcriptBox h4,.checkBox h4{margin:0 0 8px;font-size:13px;color:var(--navy)}
+.transcriptText{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+.checkItem{padding:9px 0;border-bottom:1px solid #EEF0F1;font-size:14px;color:var(--navy)}
+.checkItem:last-child{border-bottom:0}
+.resultBanner{margin-top:14px;padding:15px;border-radius:16px;font-weight:800;line-height:1.45}
+.resultBanner.success{background:#EEF8F1;color:#287441}.resultBanner.try{background:#FFF7E8;color:#98671A}
+.retryBtn{width:100%;margin-top:10px}
+@media(max-width:480px){.recControls{grid-template-columns:1fr}.studioHeader{align-items:flex-start;flex-direction:column}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">MISSION<span>:</span> SPEAK! 🎤</div>
+    <div class="headerRight">
+      <div class="pill" id="headerProgress">0 / 100 completed</div>
+      <button class="iconBtn" onclick="resetData()" title="Reset progress">↺</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">YOUR ENGLISH SPEAKING JOURNEY</div>
+    <h1>MISSION:<br>SPEAK! 🎤</h1>
+    <p>Choose your level. Pick your mission. Practice with confidence.</p>
+    <div class="heroActions">
+      <button class="primary" onclick="scrollToLevels()">CHOOSE A LEVEL</button>
+      <button class="secondary" onclick="continueJourney()">CONTINUE LAST MISSION</button>
+    </div>
+  </section>
+
+  <section class="continue">
+    <div>
+      <div class="kicker">YOUR LAST ACTIVITY</div>
+      <div class="continueTitle" id="continueTitle">Ready to begin?</div>
+      <div class="continueText" id="continueText">Choose any level and mission to start practicing.</div>
+      <div class="progressMini"><span id="progressBar" style="width:0%"></span></div>
+    </div>
+    <button class="primary" onclick="continueJourney()">CONTINUE</button>
+  </section>
+
+  <section id="levels" class="levelsSection">
+    <div class="sectionHead">
+      <div>
+        <h2>Choose your level</h2>
+        <p>You decide which mission you want to practice.</p>
+      </div>
+    </div>
+    <div class="levels">
+      <button class="level" onclick="openLevel(1)">
+        <div class="levelIcon">🌱</div><div class="levelNo">LEVEL 01</div>
+        <h3>START</h3><p>Simple phrases and basic speaking confidence.</p>
+        <div class="levelRange">MISSIONS 1–25 →</div>
+      </button>
+      <button class="level" onclick="openLevel(2)">
+        <div class="levelIcon">💬</div><div class="levelNo">LEVEL 02</div>
+        <h3>TALK</h3><p>Speak longer and express your ideas clearly.</p>
+        <div class="levelRange">MISSIONS 26–50 →</div>
+      </button>
+      <button class="level" onclick="openLevel(3)">
+        <div class="levelIcon">🤝</div><div class="levelNo">LEVEL 03</div>
+        <h3>CONNECT</h3><p>Practice interaction and real conversations.</p>
+        <div class="levelRange">MISSIONS 51–75 →</div>
+      </button>
+      <button class="level" onclick="openLevel(4)">
+        <div class="levelIcon">🚀</div><div class="levelNo">LEVEL 04</div>
+        <h3>CHALLENGE</h3><p>Take on bigger and more independent speaking tasks.</p>
+        <div class="levelRange">MISSIONS 76–100 →</div>
+      </button>
+    </div>
+  </section>
+
+  <div class="footerNote">100 missions • 4 levels • your pace, your journey</div>
+</div>
+
+<div class="bottomNav">
+  <button onclick="location.reload()">⌂<span>HOME</span></button>
+  <button onclick="scrollToLevels()">▦<span>LEVELS</span></button>
+  <button class="play" onclick="continueJourney()">▶</button>
+  <button onclick="showProgress()">◔<span>PROGRESS</span></button>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+
+<script>
+const missions = [{"id": 1, "level": 1, "title": "WHO ARE YOU?", "instruction": "Introduce yourself in 3 sentences.", "helper": ["My name is ...", "I am ... years old.", "My hobby is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 2, "level": 1, "title": "MY FAVORITE THING", "instruction": "Talk about something you really like.", "helper": ["My favorite ... is ...", "I like it because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 3, "level": 1, "title": "MY HOBBY", "instruction": "Talk about your hobby and what you do in your free time.", "helper": ["My hobby is ...", "I like ... because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 4, "level": 1, "title": "THREE WORDS", "instruction": "Describe yourself using 3 words. Explain one of them.", "helper": ["I am ...", "I think I am ... because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 5, "level": 1, "title": "MY FAVORITE FOOD", "instruction": "Tell us about your favorite food and why you like it.", "helper": ["My favorite food is ...", "It tastes ...", "I like it because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 6, "level": 1, "title": "WHAT'S IN YOUR BAG?", "instruction": "Name 5 things you have in your bag.", "helper": ["I have a/an ...", "My ... is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 7, "level": 1, "title": "MY BEST FRIEND", "instruction": "Talk about your best friend.", "helper": ["My best friend's name is ...", "He/She is ...", "We like to ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 8, "level": 1, "title": "MY FAMILY", "instruction": "Introduce at least two family members.", "helper": ["This is my ...", "His/Her name is ...", "He/She likes ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 9, "level": 1, "title": "MY SCHOOL", "instruction": "Tell us something you like about your school.", "helper": ["My school is ...", "I like my school because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 10, "level": 1, "title": "MY FAVORITE SUBJECT", "instruction": "Tell us your favorite subject and why.", "helper": ["My favorite subject is ...", "I like it because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 11, "level": 1, "title": "MY MORNING", "instruction": "Talk about your morning routine.", "helper": ["I wake up at ...", "Then I ...", "After that, I ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 12, "level": 1, "title": "MY WEEKEND", "instruction": "Tell us at least 3 things you usually do on weekends.", "helper": ["On weekends, I usually ...", "Sometimes, I ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 13, "level": 1, "title": "MY FAVORITE COLOR", "instruction": "Tell us your favorite color. Find something around you with that color.", "helper": ["My favorite color is ...", "This is ...", "It is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 14, "level": 1, "title": "NAME THREE!", "instruction": "Choose a category and name 3 things. Then make one sentence.", "helper": ["Animals", "Food", "Transportation", "School things"], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 15, "level": 1, "title": "WHAT ARE YOU WEARING?", "instruction": "Describe what you are wearing today.", "helper": ["I am wearing ...", "My ... is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 16, "level": 1, "title": "MY FAVORITE ANIMAL", "instruction": "Talk about your favorite animal. Describe it!", "helper": ["My favorite animal is ...", "It is ...", "It can ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 17, "level": 1, "title": "MY DREAM JOB", "instruction": "Tell us about your dream job.", "helper": ["I want to be a/an ...", "I want to ... because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 18, "level": 1, "title": "MY DREAM PLACE", "instruction": "Where do you want to go? Tell us why.", "helper": ["I want to visit ...", "I want to go there because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 19, "level": 1, "title": "TODAY'S WEATHER", "instruction": "Look outside and describe today's weather.", "helper": ["Today is ...", "The weather is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 20, "level": 1, "title": "HOW DO YOU FEEL?", "instruction": "Tell us how you feel today and explain why.", "helper": ["Today, I feel ...", "I feel ... because ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 21, "level": 1, "title": "GUESS MY WORD!", "instruction": "Describe something without saying its name. Your friends must guess!", "helper": ["It is ...", "It has ...", "You can ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 22, "level": 1, "title": "THIS OR THAT?", "instruction": "Choose one and explain why.", "helper": ["Pizza or Burger?", "Cats or Dogs?", "Beach or Mountain?"], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 23, "level": 1, "title": "TWO TRUE, ONE FALSE", "instruction": "Tell 3 things about yourself. One of them is false!", "helper": ["1. I ...", "2. I ...", "3. I ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Just speak!"}, {"id": 24, "level": 1, "title": "FIND SOMETHING!", "instruction": "Find something around you with a color. Describe it in 2 sentences.", "helper": ["This is ...", "It is ..."], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 25, "level": 1, "title": "THE CONFIDENCE MISSION", "instruction": "Speak for 30 seconds about ANY topic you want!", "helper": ["My favorite thing", "My friend", "Food, games, animals, movies"], "time": 30, "timeLabel": "30 Seconds", "tag": "Just speak!"}, {"id": 26, "level": 2, "title": "MY DAILY ROUTINE", "instruction": "Talk about your daily activities from morning until night.", "helper": ["First, I ...", "Then, I ...", "After that, I ...", "Finally, I ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 27, "level": 2, "title": "YESTERDAY", "instruction": "Tell us 3 things you did yesterday.", "helper": ["Yesterday, I ...", "Then I ...", "After that, I ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 28, "level": 2, "title": "MY PERFECT DAY", "instruction": "Describe your perfect day from morning to night.", "helper": ["My perfect day starts ...", "Then I would ...", "I would feel ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 29, "level": 2, "title": "MY FAVORITE MOVIE", "instruction": "Talk about a movie you really like.", "helper": ["My favorite movie is ...", "It is about ...", "I like it because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 30, "level": 2, "title": "MY FAVORITE SONG", "instruction": "Talk about a song you like. Do not sing it—just describe it!", "helper": ["My favorite song is ...", "It is by ...", "I like it because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 31, "level": 2, "title": "A SPECIAL PERSON", "instruction": "Talk about someone who is important to you.", "helper": ["This person is ...", "He/She is ...", "I like him/her because ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 32, "level": 2, "title": "MY FAVORITE PLACE", "instruction": "Describe your favorite place.", "helper": ["My favorite place is ...", "It is ...", "I like going there because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 33, "level": 2, "title": "MY LAST HOLIDAY", "instruction": "Tell us about your last holiday or weekend trip.", "helper": ["I went to ...", "I went with ...", "We ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 34, "level": 2, "title": "MY BEST MEMORY", "instruction": "Share one happy memory.", "helper": ["One of my best memories is ...", "It happened when ...", "I felt ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 35, "level": 2, "title": "A FUNNY MOMENT", "instruction": "Tell us about something funny that happened to you.", "helper": ["One day, ...", "Then ...", "Everyone/I ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 36, "level": 2, "title": "MY FAVORITE GAME", "instruction": "Talk about a game you enjoy playing.", "helper": ["My favorite game is ...", "I play it with ...", "I like it because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 37, "level": 2, "title": "MY FAVORITE APP", "instruction": "Talk about an app you often use.", "helper": ["I often use ...", "I use it for ...", "My favorite feature is ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 38, "level": 2, "title": "MY DREAM HOUSE", "instruction": "Describe your dream house.", "helper": ["My dream house would have ...", "It would be ...", "I would like ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 39, "level": 2, "title": "MY DREAM VACATION", "instruction": "Plan your dream vacation.", "helper": ["I want to go to ...", "I want to go with ...", "I want to ... there"], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 40, "level": 2, "title": "WHAT MAKES YOU HAPPY?", "instruction": "Talk about 3 things that make you happy.", "helper": ["... makes me happy because ...", "I also feel happy when ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 41, "level": 2, "title": "WHAT MAKES YOU ANGRY?", "instruction": "Talk about something that makes you angry or upset.", "helper": ["I feel angry when ...", "I don't like it because ...", "I usually ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 42, "level": 2, "title": "MY FAVORITE SEASON", "instruction": "Choose your favorite season and explain why.", "helper": ["My favorite season is ...", "The weather is ...", "I like it because ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 43, "level": 2, "title": "MY FAVORITE DAY", "instruction": "What is your favorite day of the week? Why?", "helper": ["My favorite day is ...", "On that day, I usually ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 44, "level": 2, "title": "IF I HAD MORE TIME...", "instruction": "What would you do if you had more free time?", "helper": ["If I had more time, I would ...", "I would also ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 45, "level": 2, "title": "A SKILL I WANT TO LEARN", "instruction": "Talk about something you want to learn.", "helper": ["I want to learn ...", "It is interesting because ...", "I will practice by ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 46, "level": 2, "title": "MY FAVORITE SCHOOL MOMENT", "instruction": "Talk about a memorable moment at school.", "helper": ["It happened ...", "I was with ...", "It was memorable because ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 47, "level": 2, "title": "WEEKEND PLAN", "instruction": "Tell us about your plan for the next weekend.", "helper": ["This weekend, I am going to ...", "I will ...", "Maybe I will ..."], "time": 45, "timeLabel": "45 Seconds", "tag": "Keep talking!"}, {"id": 48, "level": 2, "title": "TALK FROM A PICTURE", "instruction": "Look at any picture around you. Describe what you see.", "helper": ["I can see ...", "There is/are ...", "I think ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 49, "level": 2, "title": "CONTINUE THE STORY", "instruction": "Your teacher says: “One morning, I opened the door and...” Continue the story!", "helper": ["Suddenly, ...", "Then, ...", "In the end, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 50, "level": 2, "title": "THE 60-SECOND TALK", "instruction": "Choose a familiar topic and keep talking for one full minute!", "helper": ["My topic is ...", "First, ...", "Also, ...", "Finally, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Keep talking!"}, {"id": 51, "level": 3, "title": "START THE CHAT", "instruction": "Start a conversation with your partner. Ask how they are and what they are doing.", "helper": ["Hi! How are you?", "What are you doing?", "How is your day?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 52, "level": 3, "title": "FIND OUT!", "instruction": "Ask your partner 5 questions about their favorite things.", "helper": ["What's your favorite ...?", "Why do you like it?", "How often do you ...?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 53, "level": 3, "title": "THE HOBBY INTERVIEW", "instruction": "Interview your partner about their hobby.", "helper": ["What is your hobby?", "When do you do it?", "Why do you like it?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 54, "level": 3, "title": "FOOD TALK", "instruction": "Ask your partner about their favorite food. Then tell them yours.", "helper": ["What's your favorite food?", "Why do you like it?", "My favorite food is ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 55, "level": 3, "title": "MAKE A PLAN", "instruction": "Invite your partner to do something this weekend.", "helper": ["Would you like to ...?", "How about ...?", "That sounds great!"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 56, "level": 3, "title": "ACCEPT OR DECLINE", "instruction": "Your partner invites you somewhere. Accept or politely decline.", "helper": ["Sure, I'd love to!", "Sorry, I can't.", "Maybe next time!"], "time": 45, "timeLabel": "45 Seconds", "tag": "Connect & speak!"}, {"id": 57, "level": 3, "title": "GIVE A COMPLIMENT", "instruction": "Give your partner a sincere compliment. Respond to their compliment too!", "helper": ["You are really good at ...", "I like your ...", "Thank you!"], "time": 45, "timeLabel": "45 Seconds", "tag": "Connect & speak!"}, {"id": 58, "level": 3, "title": "ASK FOR HELP", "instruction": "You need help with something. Ask your partner politely.", "helper": ["Can you help me?", "Could you help me with ...?", "Sure, no problem!"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 59, "level": 3, "title": "ASK FOR PERMISSION", "instruction": "Ask your teacher or partner for permission in a classroom situation.", "helper": ["May I ...?", "Can I ...?", "Is it okay if I ...?"], "time": 45, "timeLabel": "45 Seconds", "tag": "Connect & speak!"}, {"id": 60, "level": 3, "title": "CAN YOU REPEAT THAT?", "instruction": "Pretend you don't understand. Ask your partner to repeat or explain.", "helper": ["Can you repeat that?", "What does that mean?", "Could you explain it?"], "time": 45, "timeLabel": "45 Seconds", "tag": "Connect & speak!"}, {"id": 61, "level": 3, "title": "ORDER FOOD", "instruction": "Role play: One student is a customer. One student is a server.", "helper": ["I'd like ...", "Can I have ...?", "Anything else?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 62, "level": 3, "title": "GO SHOPPING", "instruction": "Role play: Buy something in a shop.", "helper": ["How much is this?", "I'd like to buy ...", "Here you are."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 63, "level": 3, "title": "ASK FOR DIRECTIONS", "instruction": "Ask your partner how to get to a place.", "helper": ["Excuse me, where is ...?", "Go straight.", "Turn left/right."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 64, "level": 3, "title": "AT THE HOTEL", "instruction": "Role play: Check into a hotel.", "helper": ["I'd like to check in.", "I have a reservation.", "Here is my ID."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 65, "level": 3, "title": "AT THE DOCTOR", "instruction": "Tell the doctor how you feel. Your partner gives simple advice.", "helper": ["I don't feel well.", "I have a ...", "You should ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 66, "level": 3, "title": "PHONE A FRIEND", "instruction": "Call your partner and make a simple plan.", "helper": ["Hi, is this ...?", "Are you free today?", "Let's ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 67, "level": 3, "title": "THE NEWS REPORTER", "instruction": "Interview your partner about something interesting that happened today.", "helper": ["What happened?", "Where did it happen?", "How did you feel?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 68, "level": 3, "title": "THE CELEBRITY INTERVIEW", "instruction": "One student is a celebrity. The other is an interviewer.", "helper": ["How do you feel about ...?", "What do you like most?", "Thank you for your time."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 69, "level": 3, "title": "AGREE OR DISAGREE", "instruction": "Choose a simple topic. Share your opinion and respond to your partner.", "helper": ["I agree because ...", "I don't agree because ...", "That's a good point."], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 70, "level": 3, "title": "WOULD YOU RATHER?", "instruction": "Ask your partner a 'Would you rather?' question and discuss the answer.", "helper": ["Would you rather ... or ...?", "I would rather ...", "Why?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 71, "level": 3, "title": "FIND SOMEONE WHO...", "instruction": "Find a classmate who likes the same thing as you.", "helper": ["Do you like ...?", "Me too!", "Really? Why?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 72, "level": 3, "title": "GUESS WHO?", "instruction": "Describe someone in the class. Your partner must guess who it is.", "helper": ["This person is ...", "He/She likes ...", "Can you guess who?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 73, "level": 3, "title": "THE MISSING INFORMATION", "instruction": "Student A knows something. Student B must ask questions to find out.", "helper": ["What is ...?", "When is ...?", "Where is ...?"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 74, "level": 3, "title": "KEEP THE CONVERSATION GOING", "instruction": "Talk with your partner for one minute without stopping the conversation.", "helper": ["Really?", "What about you?", "Tell me more!"], "time": 60, "timeLabel": "1 Minute", "tag": "Connect & speak!"}, {"id": 75, "level": 3, "title": "THE FRIENDLY GOODBYE", "instruction": "End a conversation naturally and politely.", "helper": ["It was nice talking to you.", "See you later!", "Take care!"], "time": 45, "timeLabel": "45 Seconds", "tag": "Connect & speak!"}, {"id": 76, "level": 4, "title": "MY OPINION", "instruction": "Choose a topic and share your opinion clearly.", "helper": ["In my opinion, ...", "I think ... because ...", "For example, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 77, "level": 4, "title": "AGREE OR DISAGREE?", "instruction": "“Students should have less homework.” Do you agree or disagree?", "helper": ["I agree because ...", "I disagree because ...", "In my experience, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 78, "level": 4, "title": "THE BEST SOLUTION", "instruction": "Choose a school problem and suggest a solution.", "helper": ["The problem is ...", "I think we should ...", "This will help because ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 79, "level": 4, "title": "TALENT OR HARD WORK?", "instruction": "Which is more important: talent or hard work? Explain your answer.", "helper": ["I think ... is more important.", "The reason is ...", "For example, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 80, "level": 4, "title": "SMARTPHONE DEBATE", "instruction": "Are smartphones good or bad for students?", "helper": ["Smartphones can ...", "However, ...", "In my opinion, ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 81, "level": 4, "title": "TELL A STORY", "instruction": "Tell a short story with a beginning, middle, and ending.", "helper": ["One day, ...", "Then, ...", "Finally, ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 82, "level": 4, "title": "THE SURPRISE BOX", "instruction": "Imagine you open a mysterious box. What is inside? Tell the story!", "helper": ["When I opened it, ...", "Suddenly, ...", "I was surprised because ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 83, "level": 4, "title": "IF I WERE...", "instruction": "Complete the sentence: “If I were the principal for one day...”", "helper": ["First, I would ...", "Then, I would ...", "My school would ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 84, "level": 4, "title": "A LETTER FROM THE FUTURE", "instruction": "Imagine you are writing a message to yourself 10 years from now.", "helper": ["Dear future me, ...", "I hope you ...", "Remember to ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 85, "level": 4, "title": "MY SUPERPOWER", "instruction": "Choose a superpower and explain how you would use it.", "helper": ["My superpower would be ...", "I would use it to ...", "It would help ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 86, "level": 4, "title": "WELCOME TO MY CITY", "instruction": "Become a tour guide and introduce your city or hometown.", "helper": ["Welcome to ...", "You can visit ...", "One special thing is ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 87, "level": 4, "title": "SELL THIS!", "instruction": "Choose an object near you and try to sell it like a salesperson.", "helper": ["This is the best ...", "It is useful because ...", "You should buy it because ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 88, "level": 4, "title": "BREAKING NEWS!", "instruction": "Become a news reporter and report an imaginary event.", "helper": ["Good evening!", "Today, ... happened.", "Back to you!"], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 89, "level": 4, "title": "TED TALK MINI", "instruction": "Give a short inspirational talk about something you believe in.", "helper": ["Today I want to talk about ...", "I believe ...", "Remember that ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 90, "level": 4, "title": "THE DREAM INVENTION", "instruction": "Invent something that will make life easier.", "helper": ["My invention is called ...", "It can ...", "People will use it to ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 91, "level": 4, "title": "PERSUADE ME!", "instruction": "Try to convince your audience to do something.", "helper": ["You should ...", "It is important because ...", "Imagine if ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 92, "level": 4, "title": "THE MYSTERY PICTURE", "instruction": "Imagine a strange picture. Describe it and create the story behind it.", "helper": ["In the picture, I can see ...", "I think ... happened.", "Maybe ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 93, "level": 4, "title": "INTERVIEW YOURSELF", "instruction": "Ask yourself 3 interesting questions, then answer them.", "helper": ["Question 1: ...?", "My answer is ...", "Another question is ...?"], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 94, "level": 4, "title": "THE IMPOSSIBLE CHOICE", "instruction": "Choose one: Live underwater OR live in space. Explain why.", "helper": ["I would choose ...", "It would be ...", "The biggest challenge would be ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 95, "level": 4, "title": "DESIGN A NEW SCHOOL", "instruction": "Imagine you can design the perfect school.", "helper": ["My school would have ...", "Students could ...", "The best thing would be ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 96, "level": 4, "title": "MY MESSAGE TO THE WORLD", "instruction": "If everyone in the world could hear you, what would you say?", "helper": ["I want to tell everyone ...", "We should ...", "My message is ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 97, "level": 4, "title": "THE AWARD SPEECH", "instruction": "Imagine you just won an important award. Give your speech!", "helper": ["Thank you so much!", "I would like to thank ...", "This means ..."], "time": 60, "timeLabel": "1 Minute", "tag": "Challenge yourself!"}, {"id": 98, "level": 4, "title": "JOB INTERVIEW", "instruction": "Pretend you are applying for your dream job.", "helper": ["My name is ...", "I am interested in this job because ...", "My strength is ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 99, "level": 4, "title": "THE STORYTELLER", "instruction": "Create a story using these 3 words: SCHOOL – KEY – RAIN.", "helper": ["One day at school, ...", "Then I found a key ...", "Suddenly, it started to rain ..."], "time": 90, "timeLabel": "1–2 Minutes", "tag": "Challenge yourself!"}, {"id": 100, "level": 4, "title": "THE FINAL MISSION", "instruction": "Speak for 2 minutes about ANY topic. Show everything you have learned!", "helper": ["Introduce your topic.", "Give your ideas.", "Give examples.", "End with a strong message."], "time": 120, "timeLabel": "2 Minute", "tag": "Challenge yourself!"}];
+
+const KEY="missionSpeakV7State";
+let state=loadState();
+let timer=null, selectedSeconds=30;
+/* Voice recording state */
+let mediaRecorder=null;
+let audioChunks=[];
+let recognition=null;
+let finalTranscript="";
+let recordingActive=false;
+
+function defaultState(){
+  return {completed:[],lastMissionId:null,lastScreen:"home"};
+}
+function loadState(){
+  try{return {...defaultState(),...JSON.parse(localStorage.getItem(KEY)||"null")};}
+  catch(e){return defaultState();}
+}
+function saveState(){localStorage.setItem(KEY,JSON.stringify(state));updateHome();}
+function updateHome(){
+  const done=state.completed.length;
+  document.getElementById("headerProgress").textContent=`${done} / 100 completed`;
+  document.getElementById("progressBar").style.width=`${done}%`;
+  if(state.lastMissionId){
+    const m=missions[state.lastMissionId-1];
+    document.getElementById("continueTitle").textContent=`Mission ${m.id}: ${m.title}`;
+    document.getElementById("continueText").textContent="Continue exactly where you left off.";
+  }else{
+    document.getElementById("continueTitle").textContent="Ready to begin?";
+    document.getElementById("continueText").textContent="Choose any level and mission to start practicing.";
+  }
+}
+function scrollToLevels(){document.getElementById("levels").scrollIntoView({behavior:"smooth"});}
+function openOverlay(content){
+  document.getElementById("modal").innerHTML=content;
+  document.getElementById("overlay").classList.add("show");
+}
+function closeOverlay(){
+  stopVoiceTools();
+  clearInterval(timer);
+  document.getElementById("overlay").classList.remove("show");
+  state.lastScreen="home";saveState();
+}
+function levelName(level){return [["🌱","START"],["💬","TALK"],["🤝","CONNECT"],["🚀","CHALLENGE"]][level-1];}
+
+function openLevel(level){
+  const start=(level-1)*25, end=start+25;
+  const [icon,name]=levelName(level);
+  const grid=missions.slice(start,end).map(m=>{
+    const done=state.completed.includes(m.id);
+    const current=state.lastMissionId===m.id;
+    return `<button class="missionNo ${done?'done':''} ${current?'current':''}" onclick="openMission(${m.id})">${done?'✓':m.id}</button>`;
+  }).join("");
+  openOverlay(`
+    <div class="modalTop">
+      <div><div class="modalKicker">${icon} LEVEL ${String(level).padStart(2,"0")}</div><h2 class="modalTitle">${name} — Missions ${start+1}–${end}</h2></div>
+      <button class="close" onclick="closeOverlay()">×</button>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:#17324D"></span>Last mission</span>
+      <span><span class="dot" style="background:#2F9E75"></span>Completed</span>
+      <span>Choose any mission to practice</span>
+    </div>
+    <div class="grid">${grid}</div>
+  `);
+}
+
+function openMission(id){
+  clearInterval(timer);
+  const m=missions[id-1];
+  state.lastMissionId=id;
+  state.lastScreen="mission";
+  saveState();
+  renderMission(m);
+}
+function renderMission(m){
+  stopVoiceTools(); clearInterval(timer); selectedSeconds=m.time;
+  const [icon,name]=levelName(m.level);
+  const helperList=m.helper.map(x=>`<li>${x}</li>`).join("");
+  const mins=Math.floor(m.time/60), secs=m.time%60;
+  openOverlay(`
+    <button class="backLink" onclick="openLevel(${m.level})">← BACK TO MISSIONS</button>
+    <div class="missionMeta">${icon} ${name} • MISSION ${m.id}</div>
+    <h2 class="missionTitle">${m.title}</h2>
+    <div class="helper missionBox"><b>YOUR MISSION</b><p>${m.instruction}</p></div>
+    <div class="helper"><b>💡 SPEAKING HELPER</b><ul class="helperList">${helperList}</ul></div>
+    <div class="officialTime">⏱ <strong>TIME:</strong> ${m.timeLabel} <span>• ${m.tag}</span></div>
+    <div class="timer" id="timerDisplay">${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}</div>
+    <div class="speakingStudio">
+      <div class="studioHeader"><b>🎙️ SPEAK & RECORD</b><span class="recStatus" id="recStatus">READY</span></div>
+      <div class="wave" id="voiceWave">${"<span></span>".repeat(10)}</div>
+      <div class="recControls">
+        <button class="recordBtn" id="startRecordBtn" onclick="startSpeaking(${m.id})">🎙️ START SPEAKING</button>
+
+      </div>
+      <p class="permissionNote">Allow microphone access when requested. The recording stays in your browser session.</p>
+      <div id="recordingOutput"></div>
+    </div>
+    <button class="primary full complete" onclick="completeMission(${m.id})">✓ MARK AS COMPLETED</button>
+  `);
+}
+function selectTime(sec,btn){
+  selectedSeconds=sec;
+  document.querySelectorAll(".timeChoice").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("timerDisplay").textContent=`00:${String(sec).padStart(2,"0")}`;
+}
+function updateTimer(){
+  const d=document.getElementById("timerDisplay"); if(!d)return;
+  const r=Math.max(selectedSeconds,0);
+  d.textContent=`${String(Math.floor(r/60)).padStart(2,"0")}:${String(r%60).padStart(2,"0")}`;
+}
+function startTimer(id){
+  clearInterval(timer); const m=missions.find(x=>x.id===id);
+  selectedSeconds=m.time; updateTimer();
+  timer=setInterval(()=>{
+    selectedSeconds--;
+    updateTimer();
+    if(selectedSeconds<=0){
+      clearInterval(timer);
+      timer=null;
+      finishRecording(id);
+    }
+  },1000);
+}
+async function startSpeaking(id){
+  const out=document.getElementById("recordingOutput");
+  const startBtn=document.getElementById("startRecordBtn");
+
+
+  finalTranscript="";
+  audioChunks=[];
+
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    out.innerHTML='<div class="resultBanner try">⚠️ Voice recording is not supported in this browser. Please open MISSION: SPEAK! using the latest Chrome or Edge.</div>';
+    return;
+  }
+
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    recordingActive=true;
+
+    if(window.MediaRecorder){
+      mediaRecorder=new MediaRecorder(stream);
+      mediaRecorder.ondataavailable=e=>{if(e.data && e.data.size>0) audioChunks.push(e.data);};
+      mediaRecorder.onstop=()=>{
+        if(audioChunks.length){
+          const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType || "audio/webm"});
+          const url=URL.createObjectURL(blob);
+          const audio=document.createElement("audio");
+          audio.controls=true;
+          audio.src=url;
+          audio.className="audioPlayer";
+          out.prepend(audio);
+        }
+        stream.getTracks().forEach(track=>track.stop());
+      };
+      mediaRecorder.start();
+    }
+
+    startRecognition();
+    startTimer(id);
+
+    document.getElementById("recStatus").textContent="🔴 RECORDING...";
+    document.getElementById("recStatus").classList.add("live");
+    document.getElementById("voiceWave").classList.add("live");
+    startBtn.disabled=true;
+
+  }catch(error){
+    let message="⚠️ Microphone permission is needed. Please allow microphone access and try again.";
+    if(error.name==="NotAllowedError" || error.name==="SecurityError"){
+      message="🎙️ Microphone permission was blocked. Please allow microphone access in your browser settings, then reload this page.";
+    }else if(error.name==="NotFoundError"){
+      message="🎙️ No microphone was found on this device.";
+    }
+    out.innerHTML=`<div class="resultBanner try">${message}</div>`;
+  }
+}
+
+function startRecognition(){
+  const SR=window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  // Recording can still work even when Speech Recognition is unavailable.
+  if(!SR){
+    const out=document.getElementById("recordingOutput");
+    if(out){
+      out.innerHTML='<div class="transcriptBox"><h4>📝 WHAT WE HEARD</h4><p class="transcriptText">Speech-to-text is not available in this browser. Your voice can still be recorded and played back.</p></div>';
+    }
+    return;
+  }
+
+  recognition=new SR();
+  recognition.lang="en-US";
+  recognition.continuous=true;
+  recognition.interimResults=true;
+
+  recognition.onresult=function(event){
+    let text="";
+    for(let i=0;i<event.results.length;i++){
+      text += event.results[i][0].transcript + " ";
+    }
+    finalTranscript=text.trim();
+
+    const out=document.getElementById("recordingOutput");
+    if(!out) return;
+
+    let box=document.getElementById("liveTranscript");
+    if(!box){
+      box=document.createElement("div");
+      box.id="liveTranscript";
+      box.className="transcriptBox";
+      box.innerHTML="<h4>📝 WHAT WE HEARD</h4><p class='transcriptText'></p>";
+      out.appendChild(box);
+    }
+    box.querySelector("p").textContent=finalTranscript || "Listening...";
+  };
+
+  recognition.onerror=function(){};
+  try{recognition.start();}catch(e){}
+}
+
+function finishRecording(id){
+  if(!recordingActive) return;
+
+  recordingActive=false;
+
+  if(recognition){
+    try{recognition.stop()}catch(e){}
+    recognition=null;
+  }
+
+  if(mediaRecorder && mediaRecorder.state!=="inactive"){
+    try{mediaRecorder.stop()}catch(e){}
+  }
+
+  const status=document.getElementById("recStatus");
+  const wave=document.getElementById("voiceWave");
+  const startBtn=document.getElementById("startRecordBtn");
+  const out=document.getElementById("recordingOutput");
+
+  if(status){
+    status.textContent="✓ RECORDING FINISHED";
+    status.classList.remove("live");
+  }
+  if(wave) wave.classList.remove("live");
+  if(startBtn) startBtn.disabled=false;
+
+  setTimeout(()=>{
+    if(out){
+      const done=document.createElement("div");
+      done.className="resultBanner success";
+      done.innerHTML="🎉 GREAT JOB! Your speaking time is complete. You can listen to your recording below.";
+      out.appendChild(done);
+    }
+  },400);
+}
+
+function stopVoiceTools(){
+  recordingActive=false;
+
+  if(recognition){
+    try{recognition.stop();}catch(e){}
+    recognition=null;
+  }
+
+  if(mediaRecorder && mediaRecorder.state!=="inactive"){
+    try{mediaRecorder.stop();}catch(e){}
+  }
+
+  mediaRecorder=null;
+  clearInterval(timer);
+  timer=null;
+}
+
+function stopSpeaking(id,auto){
+  if(!recordingActive && !auto) return;
+
+  recordingActive=false;
+  clearInterval(timer);
+  timer=null;
+
+  if(recognition){
+    try{recognition.stop();}catch(e){}
+    recognition=null;
+  }
+
+  if(mediaRecorder && mediaRecorder.state!=="inactive"){
+    try{mediaRecorder.stop();}catch(e){}
+  }
+
+  const status=document.getElementById("recStatus");
+  const wave=document.getElementById("voiceWave");
+  const startBtn=document.getElementById("startRecordBtn");
+  const stopBtn=document.getElementById("stopRecordBtn");
+
+  if(status){
+    status.textContent=auto ? "TIME'S UP" : "READY TO CHECK";
+    status.classList.remove("live");
+  }
+  if(wave) wave.classList.remove("live");
+  if(startBtn) startBtn.disabled=false;
+  if(stopBtn) stopBtn.disabled=true;
+
+  setTimeout(()=>checkMission(id),700);
+}
+function norm(s){return (s||"").toLowerCase().replace(/[^a-z0-9\s']/g," ").replace(/\s+/g," ").trim()}
+function requirements(m){
+  const special={1:[["your name",["my name","name is"]],["your age",["years old"]],["your hobby",["hobby","i like"]]],
+                 5:[["favorite food",["food","rice","pizza","burger","noodle","chicken"]],["reason",["because","delicious","tasty"]]],
+                 7:[["best friend",["best friend","my friend"]]],
+                 8:[["family members",["mother","father","sister","brother","family"]]],
+                 17:[["dream job",["want to be","doctor","teacher","pilot","engineer"]]]};
+  if(special[m.id])return special[m.id];
+  return m.helper.slice(0,3).map((h,i)=>["speaking point "+(i+1),norm(h).split(" ").filter(w=>w.length>3).slice(0,3)]);
+}
+function checkMission(id){
+  const m=missions.find(x=>x.id===id),out=document.getElementById("recordingOutput");
+  if(!out)return;
+  if(!finalTranscript){
+    out.innerHTML+='<div class="checkBox"><h4>🤖 MISSION CHECK</h4><p class="transcriptText">Transcript is not available in this browser. You can still listen to your recording and try again.</p></div>';
+    return;
+  }
+  const t=norm(finalTranscript), req=requirements(m);
+  const rows=req.map(([label,keys])=>{const ok=keys.some(k=>t.includes(norm(k)));return {label,ok}});
+  const passed=rows.filter(x=>x.ok).length, success=passed>=Math.max(1,Math.ceil(rows.length*.6));
+  out.innerHTML+=`<div class="checkBox"><h4>🤖 MISSION CHECK</h4>${rows.map(x=>`<div class="checkItem">${x.ok?"✅":"⚪"} <b>${x.ok?"Mentioned:":"Try adding:"}</b> ${x.label}</div>`).join("")}</div>
+  <div class="resultBanner ${success?"success":"try"}">${success?"🎉 GREAT JOB! Your speech matches the main goal of this mission.":"💡 ALMOST THERE! Try again and include more parts of the mission."}</div>
+  ${success?"":`<button class="retryBtn" onclick="startSpeaking(${id})">🎙️ TRY SPEAKING AGAIN</button>`}`;
+}
+function completeMission(id){
+  if(!state.completed.includes(id)) state.completed.push(id);
+  state.lastMissionId=id;
+  saveState();
+  const m=missions[id-1];
+  openOverlay(`
+    <div style="text-align:center;padding:20px 8px">
+      <div style="font-size:52px">🏆</div>
+      <div class="modalKicker" style="margin-top:14px">MISSION COMPLETE</div>
+      <h2 class="modalTitle">Great job!</h2>
+      <p style="color:var(--muted);line-height:1.6">Mission ${id} has been added to your progress.</p>
+      <button class="primary full" style="margin-top:16px" onclick="openLevel(${m.level})">BACK TO MISSIONS</button>
+    </div>
+  `);
+}
+function continueJourney(){
+  if(state.lastMissionId) openMission(state.lastMissionId);
+  else scrollToLevels();
+}
+function showProgress(){
+  const done=state.completed.length;
+  openOverlay(`
+    <div class="modalTop"><div><div class="modalKicker">YOUR PROGRESS</div><h2 class="modalTitle">${done} / 100 Missions</h2></div><button class="close" onclick="closeOverlay()">×</button></div>
+    <div style="height:14px;background:#E9EEF0;border-radius:999px;overflow:hidden"><div style="height:100%;width:${done}%;background:#2F9E75;border-radius:999px"></div></div>
+    <p style="color:var(--muted);line-height:1.7;margin-top:20px">Every completed mission is saved on this device. You can choose any mission from any level.</p>
+  `);
+}
+function resetData(){
+  if(confirm("Reset all progress?")){localStorage.removeItem(KEY);state=defaultState();updateHome();}
+}
+
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeOverlay();});
+updateHome();
+</script>
+</body>
+</html>
